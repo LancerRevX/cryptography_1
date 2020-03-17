@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <windows.h>
+
+#ifdef WIN32
+    #include <windows.h>
+#endif
+
 #include <gmp.h>
 
 int main()
 {
-    clock_t start = clock();
+    #ifdef WIN32
+        SetConsoleOutputCP(CP_UTF8);
+    #endif
 
-    SetConsoleOutputCP(CP_UTF8);
     gmp_randstate_t randstate;
     gmp_randinit_default(randstate);
     gmp_randseed_ui(randstate, time(0));
@@ -40,12 +45,11 @@ int main()
         }
     }
 
+    printf("Относительная частота: %lf\n", (double) division_count / M);
+
     mpz_clear(N);
     mpz_clear(a);
     mpz_clear(b);
-
-    printf("Относительная частота: %lf\n", (double) division_count / M);
-    printf("%lf seconds\n", (double) (clock() - start) / CLOCKS_PER_SEC);
 
     return EXIT_SUCCESS;
 }

@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/nikit/Documents/Projects/cryptography_1/main.c
+stdio.h
+-
+stdlib.h
+-
+time.h
+-
+windows.h
+-
+gmp.h
+-
+
