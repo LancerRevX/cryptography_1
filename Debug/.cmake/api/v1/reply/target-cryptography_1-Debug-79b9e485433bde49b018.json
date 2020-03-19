@@ -62,6 +62,10 @@
 				"role" : "flags"
 			},
 			{
+				"fragment" : "-lmpfr",
+				"role" : "libraries"
+			},
+			{
 				"fragment" : "-lgmp",
 				"role" : "libraries"
 			},

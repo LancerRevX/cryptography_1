@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <time.h>
 
 #ifdef WIN32
@@ -7,6 +8,7 @@
 #endif
 
 #include <gmp.h>
+#include <mpfr.h>
 
 int main()
 {
@@ -26,7 +28,7 @@ int main()
     mpz_init(a);
     mpz_init(b);
 
-    size_t M = 10000;
+    size_t const M = 10000;
     size_t division_count = 0;
     for (size_t i = 0; i < M; i++) {
         mpz_urandomm(a, randstate, N);
@@ -45,11 +47,22 @@ int main()
         }
     }
 
-    printf("Относительная частота: %lf\n", (double) division_count / M);
-
-    mpz_clear(N);
     mpz_clear(a);
     mpz_clear(b);
+
+    printf("Относительная частота: %lf\n", (double) division_count / M);
+
+    mpfr_t estimation;
+    mpfr_init(estimation);
+    mpfr_set_z(estimation, N, MPFR_RNDN);
+    mpfr_log(estimation, estimation, MPFR_RNDN);
+    mpfr_mul_d(estimation, estimation, M_LN2, MPFR_RNDN);
+    mpfr_mul_ui(estimation, estimation, 12, MPFR_RNDN);
+    mpfr_div_d(estimation, estimation, M_PI * M_PI, MPFR_RNDN);
+    mpfr_printf("Теоретическая оценка: %Rg\n", estimation);
+
+    mpz_clear(N);
+    mpfr_clear(estimation);
 
     return EXIT_SUCCESS;
 }

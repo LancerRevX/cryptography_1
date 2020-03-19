@@ -11,10 +11,14 @@ stdio.h
 -
 stdlib.h
 -
+math.h
+-
 time.h
 -
 windows.h
 -
 gmp.h
+-
+mpfr.h
 -
 
