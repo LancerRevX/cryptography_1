@@ -1,3 +1,0 @@
-C:/Users/nikit/Documents/Projects/cryptography_4/Debug/CMakeFiles/cryptography_4.dir
-C:/Users/nikit/Documents/Projects/cryptography_4/Debug/CMakeFiles/edit_cache.dir
-C:/Users/nikit/Documents/Projects/cryptography_4/Debug/CMakeFiles/rebuild_cache.dir

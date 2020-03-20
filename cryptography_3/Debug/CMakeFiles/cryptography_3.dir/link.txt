@@ -1,3 +1,0 @@
-C:\Qt\Tools\CMake_64\bin\cmake.exe -E remove -f CMakeFiles\cryptography_3.dir/objects.a
-C:\msys64\mingw64\bin\ar.exe cr CMakeFiles\cryptography_3.dir/objects.a @CMakeFiles\cryptography_3.dir\objects1.rsp
-C:\msys64\mingw64\bin\gcc.exe -g   -Wl,--whole-archive CMakeFiles\cryptography_3.dir/objects.a -Wl,--no-whole-archive  -o cryptography_3.exe -Wl,--out-implib,libcryptography_3.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cryptography_3.dir\linklibs.rsp
