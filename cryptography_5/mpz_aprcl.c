@@ -170,7 +170,7 @@ int mpz_euler_prp(mpz_t n, mpz_t a)
  * A "strong pseudoprime" to the base a is an odd composite n = (2^r)*s+1 with s odd such that
  * either a^s == 1 mod n, or a^((2^t)*s) == -1 mod n, for some integer t, with 0 <= t < r.
  * *********************************************************************************************/
-int mpz_sprp(mpz_t n, mpz_t a)
+int mpz_sprp(mpz_t const n, mpz_t const a)
 {
   mpz_t s;
   mpz_t nm1;
@@ -374,7 +374,7 @@ int mpz_fibonacci_prp(mpz_t n, long int p, long int q)
  * A "Lucas pseudoprime" with parameters (P,Q) is a composite n with D=P^2-4Q,
  * (n,2QD)=1 such that U_(n-(D/n)) == 0 mod n [(D/n) is the Jacobi symbol]
  * *******************************************************************************/
-int mpz_lucas_prp(mpz_t n, long int p, long int q)
+int mpz_lucas_prp(mpz_t const n, long int p, long int q)
 {
   mpz_t zD;
   mpz_t res;
@@ -943,7 +943,7 @@ int mpz_extrastronglucas_prp(mpz_t n, long int p)
  * Then use P=1 and Q=(1-D)/4 in the Lucas pseudoprime test.
  * Make sure n is not a perfect square, otherwise the search for D will only stop when D=n.
  * ***********************************************************************************************/
-int mpz_selfridge_prp(mpz_t n)
+int mpz_selfridge_prp(mpz_t const n)
 {
   long int d = 5, p = 1, q = 0;
   int max_d = 1000000;
@@ -1118,7 +1118,7 @@ int mpz_strongselfridge_prp(mpz_t n)
  * n is a strong pseudoprime to the base 2 and
  * n is a Lucas pseudoprime using the Selfridge parameters.
  * **********************************************************************************/
-int mpz_bpsw_prp(mpz_t n)
+int mpz_bpsw_prp(mpz_t const n)
 {
   int ret = 0;
   mpz_t two;
@@ -1628,7 +1628,7 @@ void JacobiSum(int mode, int P, int PL, int Q)
 }
 /* ============================================================================================== */
 
-int mpz_aprcl(mpz_t N)
+int mpz_aprcl(mpz_t const N)
 {
   /* Just return the status of the input */
   /* Do not print out any progress information */
@@ -1641,7 +1641,7 @@ int mpz_aprcl(mpz_t N)
 /* Return codes: 0 = N is composite.            */
 /*               1 = N is a bpsw probable prime */
 /*               2 = N is prime.                */
-int mpz_aprtcle(mpz_t N, int verbose)
+int mpz_aprtcle(mpz_t const N, int verbose)
 {
   s64_t T, U;
   int i, j, H, I, J, K, P, Q, W, X;
