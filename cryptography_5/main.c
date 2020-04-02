@@ -16,7 +16,7 @@
 #include "prime_factorize.h"
 
 size_t is_power(mpz_t const, mpz_t const);
-size_t is_odd_prime_power(mpz_t const);
+//size_t is_odd_prime_power(mpz_t const);
 size_t is_power_of_2(mpz_t const);
 
 void euler_function_prime_power(mpz_t, mpz_t const, size_t);
@@ -34,17 +34,16 @@ int main() {
     gmp_randinit_default(randstate);
     gmp_randseed_ui(randstate, time(0));
 
-    mpz_ui_pow_ui(N, 10, 3);
+    mpz_set_ui(a, 1003);
+    mpz_set_ui(b, 2008);
+    mpz_set_ui(N, 1000);
 
-    mpz_set_ui(a, 1);
-    for (size_t j = 0; j < 20; j++) {
-//        mpz_urandomm(a, randstate, N);
-        carmichael_function(b, a);
-//        if (is_odd_prime_power(a)) {
-//            gmp_printf("%Zi is odd prime power\n", a);
-//        }
-        gmp_printf("lambda(%Zi) = %Zi\n", a, b);
-        mpz_add_ui(a, a, 1);
+    size_t n = 50;
+    mpz_ui_pow_ui(a, 10, n);
+    gmp_printf("0: %Zi\n", a);
+    for (size_t i = 1; i <= n + 1; i++) {
+        carmichael_function(a, a);
+        gmp_printf("%llu: %Zi\n", i, a);
     }
 
     mpz_clears(a, b, c, N, 0);
@@ -58,8 +57,6 @@ void carmichael_function(mpz_t rop, mpz_t const op) {
         euler_function_prime_power(rop, op, 1);
     } else if (mpz_cmp_ui(op, 4) == 0) {
         euler_function_prime_power(rop, op, 2);
-    } else if ((n = is_odd_prime_power(op))) {
-        euler_function_prime_power(rop, op, n);
     } else if ((n = is_power_of_2(op))) {
         euler_function_prime_power(rop, op, n);
         mpz_div_ui(rop, rop, 2);
@@ -67,12 +64,20 @@ void carmichael_function(mpz_t rop, mpz_t const op) {
         mpz_t a;
         mpz_init(a);
         List factors = prime_factorize(op);
-        mpz_set_ui(rop, 1);
-        for (size_t i = 0; i < factors.length; i++) {
-            mpz_set(a, factors.data[i].factor);
-            mpz_pow_ui(a, a, factors.data[i].power);
-            carmichael_function(a, a);
-            mpz_lcm(rop, rop, a);
+        if (factors.length == 1) {
+            euler_function_prime_power(
+                rop,
+                op,
+                factors.data[0].power
+            );
+        } else {
+            mpz_set_ui(rop, 1);
+            for (size_t i = 0; i < factors.length; i++) {
+                mpz_set(a, factors.data[i].factor);
+                mpz_pow_ui(a, a, factors.data[i].power);
+                carmichael_function(a, a);
+                mpz_lcm(rop, rop, a);
+            }
         }
         list_delete(factors);
         mpz_clear(a);
@@ -88,25 +93,25 @@ void euler_function_prime_power(mpz_t rop, mpz_t const op, size_t n) {
     mpz_clear(a);
 }
 
-size_t is_odd_prime_power(mpz_t const op) {
-    if (mpz_aprcl(op)) {
-        return 1;
-    }
-    mpz_t i, sqrt;
-    mpz_init(sqrt);
-    mpz_init_set_ui(i, 3);
-    mpz_sqrt(sqrt, op);
-    while (mpz_cmp(i, sqrt) <= 0) {
-        if (mpz_odd_p(i) && mpz_aprcl(i)) {
-            size_t power = is_power(op, i);
-            if (power > 0) {
-                return power;
-            }
-        }
-        mpz_add_ui(i, i, 1);
-    }
-    return 0;
-}
+//size_t is_odd_prime_power(mpz_t const op) {
+//    if (mpz_aprcl(op)) {
+//        return 1;
+//    }
+//    mpz_t i, sqrt;
+//    mpz_init(sqrt);
+//    mpz_init_set_ui(i, 3);
+//    mpz_sqrt(sqrt, op);
+//    while (mpz_cmp(i, sqrt) <= 0) {
+//        if (mpz_odd_p(i) && mpz_aprcl(i)) {
+//            size_t power = is_power(op, i);
+//            if (power > 0) {
+//                return power;
+//            }
+//        }
+//        mpz_add_ui(i, i, 1);
+//    }
+//    return 0;
+//}
 
 size_t is_power(mpz_t const op1, mpz_t const op2) {
     mpfr_t a, b;
